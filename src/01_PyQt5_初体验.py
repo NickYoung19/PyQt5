@@ -20,11 +20,11 @@ window.resize(500, 400)
 window.move(400, 200)
 
 # 定义一个标签, 指定主窗口为父控件
-lable = QLabel(window)
+label = QLabel(window)
 # 给标签设置文本内容
-lable.setText("Hello PyQt5!")
+label.setText("Hello PyQt5!")
 # 设置标签的位置
-lable.move(215, 190)
+label.move(215, 190)
 
 # 显示窗口
 window.show()
