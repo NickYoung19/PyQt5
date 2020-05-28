@@ -21,6 +21,7 @@ class Window(QWidget):
         """
         self.get_Qobject_parent_cls()
         self.operate_objName_property()
+        self.operate_objParent_sub()
 
     def get_Qobject_parent_cls(self):
         """
@@ -89,6 +90,62 @@ class Window(QWidget):
         label5.setObjectName("notice")
         label5.setProperty("notice_level", "error")
         # ************* 案例演示 *************结束
+
+    def operate_objParent_sub(self):
+        """
+        QObject对象的父子关系操作
+        :return:
+        """
+        # ************* 测试API *************开始
+        # obj1 = QObject()
+        # obj2 = QObject()
+        # print("obj1: ", obj1)
+        # print("obj2: ", obj2)
+        #
+        # obj1.setParent(obj2)    # 将obj2设置为obj1的父对象
+        # print("obj1的父对象为: ", obj1.parent())    # 获取obj1的父对象
+        """
+        设置如图的继承关系:
+             obj0
+         |-----|-----|
+        obj1        obj2
+         |        |---|---|
+        obj3     obj4    obj5
+        """
+        obj0 = QObject()
+        obj1 = QObject()
+        obj2 = QObject()
+        obj3 = QObject()
+        obj4 = QObject()
+        obj5 = QObject()
+        print("obj0: ", obj0)
+        print("obj1: ", obj1)
+        print("obj2: ", obj2)
+        print("obj3: ", obj3)
+        print("obj4: ", obj4)
+        print("obj5: ", obj5)
+
+        obj1.setParent(obj0)
+        obj2.setParent(obj0)
+
+        obj3.setParent(obj1)
+        obj3.setObjectName("3")
+
+        obj4.setParent(obj2)
+        obj5.setParent(obj2)
+
+        print("obj4的父对象: ", obj4.parent())    # parent()获取obj4的父对象, 父对象有且只有一个, 以最后设置的为准
+        print("obj0的子对象: ", obj0.children())  # children()获取obj0的所有直接[一级]子对象(这里没有间接子对象, 即obj3,obj4...)
+
+        print("obj0的第一个子对象: ", obj0.findChild(QObject))  # 获取obj0的第一个基于QObject类型的子对象
+        # 要想获取间接[二级]子对象, 方法如下
+        print("递归查找1: ", obj0.findChild(QObject, "3")) # 获取obj0指定对象名称的子对象(先设置对象名称为3, 再通过对象名称查找), 默认递归查找
+        print("递归查找2: ", obj0.findChild(QObject, "3", Qt.FindChildrenRecursively)) # 同上, 递归查找
+
+        print("直接子对象: ", obj0.findChild(QObject, "3", Qt.FindDirectChildrenOnly)) # 查找直接[一级]子对象, 找不到返回None
+
+        print(obj0.findChildren(QObject))   # 查找obj0的所有基于QObject类型的子对象, 包括直接和间接子对象
+        # ************* 测试API *************结束
 
 
 if __name__ == '__main__':
