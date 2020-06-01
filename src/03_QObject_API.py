@@ -147,6 +147,17 @@ class Window(QWidget):
         print(obj0.findChildren(QObject))   # 查找obj0的所有基于QObject类型的子对象, 包括直接和间接子对象
         # ************* 测试API *************结束
 
+        # ************* 内存管理机制 *************开始
+        obj6 = QObject()
+        self.obj6 = obj6
+
+        obj7 = QObject()
+        obj7.setParent(obj6)
+        # 监听对象obj7是否被释放
+        obj7.destroyed.connect(lambda : print("对象obj7被释放了..."))
+        del self.obj6   # 删除父对象obj6, 观察子对象obj7是否也被释放
+        # ************* 内存管理机制 *************结束
+
 
 if __name__ == '__main__':
     import sys
