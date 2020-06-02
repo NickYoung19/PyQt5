@@ -19,9 +19,10 @@ class Window(QWidget):
         设置子控件
         :return:
         """
-        self.get_Qobject_parent_cls()
-        self.operate_objName_property()
-        self.operate_objParent_sub()
+        # self.get_Qobject_parent_cls()
+        # self.operate_objName_property()
+        # self.operate_objParent_sub()
+        self.operate_object_signal()
 
     def get_Qobject_parent_cls(self):
         """
@@ -149,7 +150,7 @@ class Window(QWidget):
 
         # ************* 内存管理机制 *************开始
         obj6 = QObject()
-        self.obj6 = obj6
+        self.obj6 = obj6    # 给obj6对象添加一个引用, 不让其释放(便于下面演示手动释放)
 
         obj7 = QObject()
         obj7.setParent(obj6)
@@ -157,6 +158,33 @@ class Window(QWidget):
         obj7.destroyed.connect(lambda : print("对象obj7被释放了..."))
         del self.obj6   # 删除父对象obj6, 观察子对象obj7是否也被释放
         # ************* 内存管理机制 *************结束
+
+    def operate_object_signal(self):
+        """
+        QObject信号与槽的操作
+        :return:
+        """
+        self.obj7 = QObject()
+        # def destroy_cao(obj):
+        #     print("对象被释放了...", obj)
+        #
+        # self.obj7.destroyed.connect(destroy_cao)    # 连接曹
+        # del self.obj7   # 手动释放对象
+
+        def obj_name_cao(obj):
+            # obj用于接收objectNameChanged信号触发传来的对象
+            print("对象名称发生了改变...", obj)
+
+        self.obj7.objectNameChanged.connect(obj_name_cao)
+        self.obj7.setObjectName("XXX")  # 设置对象的名称
+
+        # self.obj7.objectNameChanged.disconnect(obj_name_cao)    # 取消与槽的连接
+        self.obj7.blockSignals(True)    # 方法二: 临时取消与槽的连接
+        self.obj7.setObjectName("OOO")
+        self.obj7.blockSignals(False)   # 恢复与槽的连接
+        self.obj7.setObjectName("XXXOOO")
+
+        print(self.obj7.receivers(self.obj7.objectNameChanged)) # receivers当前已连接槽的数量
 
 
 def QWidget_parent_sub_relation():
