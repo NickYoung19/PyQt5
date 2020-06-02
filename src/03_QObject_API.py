@@ -159,10 +159,57 @@ class Window(QWidget):
         # ************* 内存管理机制 *************结束
 
 
+def QWidget_parent_sub_relation():
+    """
+    QWidget控件的父子关系
+    :return:
+    """
+    # win1 = QWidget()
+    # win1.setWindowTitle("红色")
+    # win1.resize(500, 500)
+    # win1.setStyleSheet("background-color: red;")
+    # win1.show()
+    #
+    # win2 = QWidget()
+    # win2.setWindowTitle("绿色")
+    # win2.setStyleSheet("background-color: green;")
+    # # win2.setParent(win1)
+    # win2.resize(1000, 100)
+    # win2.show()
+
+    win_root = QWidget()
+
+    label1 = QLabel()
+    label1.setText("label1")
+    label1.setParent(win_root)
+
+    label2 = QLabel()
+    label2.move(50, 50)
+    label2.setText("label2")
+    label2.setParent(win_root)
+
+    label3 = QLabel()
+    label3.move(80, 80)
+    label3.setText("label3")
+    label3.setParent(win_root)
+
+    btn = QPushButton(win_root)
+    btn.move(100, 100)
+    btn.setText("btn")
+
+    win_root.show()
+
+    for sub_widget in win_root.findChildren(QLabel):
+        print(sub_widget)
+        sub_widget.setStyleSheet("background-color: cyan;")
+
+
 if __name__ == '__main__':
     import sys
     # 创建一个应用对象
     app = QApplication(sys.argv)
+
+    # QWidget_parent_sub_relation()
 
     # 实例化一个窗口控件
     window = Window()
