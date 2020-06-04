@@ -164,6 +164,7 @@ class Window(QWidget):
         QObject信号与槽的操作
         :return:
         """
+        """
         self.obj7 = QObject()
         # def destroy_cao(obj):
         #     print("对象被释放了...", obj)
@@ -185,7 +186,29 @@ class Window(QWidget):
         self.obj7.setObjectName("XXXOOO")
 
         print(self.obj7.receivers(self.obj7.objectNameChanged)) # receivers当前已连接槽的数量
+        """
+        # ************* 信号与槽操作案例一 *************开始
+        # btn = QPushButton(self)
+        # btn.setText("点我啊")
+        #
+        # def cao():
+        #     print("点我干嘛~")
+        #
+        # btn.clicked.connect(cao)
+        # ************* 信号与槽操作案例一 *************结束
 
+        # ************* 信号与槽操作案例二 *************开始
+        def cao(title):
+            print("窗口标题发生了变化", title)
+            self.blockSignals(True)     # 临时断开与槽的连接
+            self.setWindowTitle("撩课 - " + title)
+            self.blockSignals(False)    # 在重新设置标题后, 恢复与槽的连接
+
+        self.windowTitleChanged.connect(cao)    # 连接信号与槽
+
+        self.setWindowTitle("Hello Nick")   # 第一次设置标题
+        self.setWindowTitle("Hello Nick2")  # 第二次设置标题
+        # ************* 信号与槽操作案例二 *************结束
 
 def QWidget_parent_sub_relation():
     """
