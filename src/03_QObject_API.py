@@ -22,7 +22,8 @@ class Window(QWidget):
         # self.get_Qobject_parent_cls()
         # self.operate_objName_property()
         # self.operate_objParent_sub()
-        self.operate_object_signal()
+        # self.operate_object_signal()
+        self.judge_object_type()
 
     def get_Qobject_parent_cls(self):
         """
@@ -209,6 +210,40 @@ class Window(QWidget):
         self.setWindowTitle("Hello Nick")   # 第一次设置标题
         self.setWindowTitle("Hello Nick2")  # 第二次设置标题
         # ************* 信号与槽操作案例二 *************结束
+
+    def judge_object_type(self):
+        """
+        QObject类型的判定
+        :return:
+        """
+        obj = QObject()
+        w = QWidget()
+        btn = QPushButton()
+        label = QLabel()
+        obj_li = [obj, w, btn, label]
+        for o in obj_li:
+            # print("是否是控件类型: ", o.isWidgetType())     # isWidgetType判断是否是控件类型
+            """
+            是否是控件类型:  False
+            是否是控件类型:  True
+            是否是控件类型:  True
+            是否是控件类型:  True
+            """
+            # print("是否继承父类QWidget: ", o.inherits("QWidget"))     # inherits判断对象是否(直接或间接)继承某个父类
+            """
+            是否继承父类QWidget:  False
+            是否继承父类QWidget:  True
+            是否继承父类QWidget:  True
+            是否继承父类QWidget:  True
+            """
+            print("是否继承父类QPushButton: ", o.inherits("QPushButton"))     # 判断对象是否(直接或间接)继承某个父类
+            """
+            是否继承父类QPushButton:  False
+            是否继承父类QPushButton:  False
+            是否继承父类QPushButton:  True
+            是否继承父类QPushButton:  False
+            """
+
 
 def QWidget_parent_sub_relation():
     """
