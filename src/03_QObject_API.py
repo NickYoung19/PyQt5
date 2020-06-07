@@ -216,33 +216,57 @@ class Window(QWidget):
         QObject类型的判定
         :return:
         """
-        obj = QObject()
-        w = QWidget()
-        btn = QPushButton()
-        label = QLabel()
-        obj_li = [obj, w, btn, label]
-        for o in obj_li:
-            # print("是否是控件类型: ", o.isWidgetType())     # isWidgetType判断是否是控件类型
-            """
-            是否是控件类型:  False
-            是否是控件类型:  True
-            是否是控件类型:  True
-            是否是控件类型:  True
-            """
-            # print("是否继承父类QWidget: ", o.inherits("QWidget"))     # inherits判断对象是否(直接或间接)继承某个父类
-            """
-            是否继承父类QWidget:  False
-            是否继承父类QWidget:  True
-            是否继承父类QWidget:  True
-            是否继承父类QWidget:  True
-            """
-            print("是否继承父类QPushButton: ", o.inherits("QPushButton"))     # 判断对象是否(直接或间接)继承某个父类
-            """
-            是否继承父类QPushButton:  False
-            是否继承父类QPushButton:  False
-            是否继承父类QPushButton:  True
-            是否继承父类QPushButton:  False
-            """
+        # ************* 类型的判定API *************开始
+        # obj = QObject()
+        # w = QWidget()
+        # btn = QPushButton()
+        # label = QLabel()
+        # obj_li = [obj, w, btn, label]
+        # for o in obj_li:
+        #     # print("是否是控件类型: ", o.isWidgetType())     # isWidgetType判断是否是控件类型
+        #     """
+        #     是否是控件类型:  False
+        #     是否是控件类型:  True
+        #     是否是控件类型:  True
+        #     是否是控件类型:  True
+        #     """
+        #     # print("是否继承父类QWidget: ", o.inherits("QWidget"))     # inherits判断对象是否(直接或间接)继承某个父类
+        #     """
+        #     是否继承父类QWidget:  False
+        #     是否继承父类QWidget:  True
+        #     是否继承父类QWidget:  True
+        #     是否继承父类QWidget:  True
+        #     """
+        #     print("是否继承父类QPushButton: ", o.inherits("QPushButton"))     # 判断对象是否(直接或间接)继承某个父类
+        #     """
+        #     是否继承父类QPushButton:  False
+        #     是否继承父类QPushButton:  False
+        #     是否继承父类QPushButton:  True
+        #     是否继承父类QPushButton:  False
+        #     """
+        # ************* 类型的判定API *************结束
+
+        # ************* 类型的判定案例 *************开始
+        label1 = QLabel(self)
+        label1.setText("社会我顺哥")
+        label1.move(100, 100)
+
+        label2 = QLabel(self)
+        label2.setText("人狠话不多")
+        label2.move(100, 150)
+
+        btn = QPushButton(self)
+        btn.setText("点我")
+        btn.move(100, 200)
+
+        # 方法一: 给label空间设置背景颜色
+        # for widget in self.findChildren(QLabel):
+        #     widget.setStyleSheet("background-color: cyan;")
+        # 方法二:
+        for widget in self.children():
+            if widget.inherits("QLabel"):
+                widget.setStyleSheet("background-color: cyan;")
+        # ************* 类型的判定案例 *************结束
 
 
 def QWidget_parent_sub_relation():
