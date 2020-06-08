@@ -23,7 +23,8 @@ class Window(QWidget):
         # self.operate_objName_property()
         # self.operate_objParent_sub()
         # self.operate_object_signal()
-        self.judge_object_type()
+        # self.judge_object_type()
+        self.delete_object()
 
     def get_Qobject_parent_cls(self):
         """
@@ -267,6 +268,30 @@ class Window(QWidget):
             if widget.inherits("QLabel"):
                 widget.setStyleSheet("background-color: cyan;")
         # ************* 类型的判定案例 *************结束
+
+    def delete_object(self):
+        """
+        QObject对象删除API
+        obj.deleteLater(): 1.删除一个对象时, 也会解除它与父对象之间的关系
+                           2.deleteLater()并没有将对象立即释放, 而是向主消息循环发送了一个event(事件), 下一次消息循环收到这个event之后才销毁对象
+                           3.这样做的好处: 可以在这些延迟删除的时间内完成一些操作, 坏处是内存释放会不及时
+        :return:
+        """
+        obj1 = QObject()
+        self.obj1 = obj1
+        obj2 = QObject()
+        obj3 = QObject()
+
+        obj3.setParent(obj2)
+        obj2.setParent(obj1)
+
+        obj1.destroyed.connect(lambda: print("obj1被释放了"))
+        obj2.destroyed.connect(lambda: print("obj2被释放了"))
+        obj3.destroyed.connect(lambda: print("obj3被释放了"))
+
+        # del obj2  # 只能删除obj2的引用, 并不能解除父对象self的关系
+        obj2.deleteLater()  # 并没有将对象立即释放, 先解除它与父对象之间的关系, 并在下一次消息循环收到这个event事件之后才销毁对象
+        print(obj2)
 
 
 def QWidget_parent_sub_relation():
